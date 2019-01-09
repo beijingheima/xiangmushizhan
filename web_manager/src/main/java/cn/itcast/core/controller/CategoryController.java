@@ -69,4 +69,8 @@ public class CategoryController {
             return new Result(false, "保存失败!");
         }
     }
+
+    public static void main(String[] args) {
+        System.out.print("12312321321");
+    }
 }
