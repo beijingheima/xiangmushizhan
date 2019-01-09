@@ -1,6 +1,12 @@
 <component name="ArtifactManager">
   <artifact type="war" name="web_user:war">
     <output-path>$PROJECT_DIR$/web_user/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>web_user</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="archive" name="web_user.war">
       <element id="artifact" artifact-name="web_user:war exploded" />
     </root>
