@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/brand")
 public class BrandController {
-
+    //12312312132
     @Reference
     private BrandService brandService;
 
@@ -112,4 +112,5 @@ public class BrandController {
         List<Map> list = brandService.selectOptionList();
         return list;
     }
+
 }
