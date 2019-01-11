@@ -3,7 +3,10 @@ package cn.itcast.core.service;
 import cn.itcast.core.dao.seckill.SeckillGoodsDao;
 import cn.itcast.core.pojo.seckill.SeckillGoods;
 import cn.itcast.core.pojo.seckill.SeckillGoodsQuery;
+import cn.itcast.core.pojo.seckill.SeckillOrder;
+import cn.itcast.core.util.IdWorker;
 import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -16,7 +19,17 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
     private SeckillGoodsDao seckillGoodsDao;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private IdWorker idWorker;
 
+    //支付前获取订单
+    @Override
+    public SeckillOrder searchOrderFromRedisByUserId(String userId) {
+        SeckillOrder secKillOrder = (SeckillOrder)redisTemplate.boundHashOps("secKillOrder").get(userId);
+        return secKillOrder;
+
+
+    }
 
     //提交订单
     @Override
@@ -37,6 +50,17 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
             redisTemplate.boundHashOps("seckillGoods").delete(seckillId);
         }
 
+        long orderId = idWorker.nextId();
+        SeckillOrder seckillOrder = new SeckillOrder();
+        seckillOrder.setId(orderId);
+        seckillOrder.setCreateTime(new Date());
+        seckillOrder.setMoney(secKillGoods.getCostPrice());
+        seckillOrder.setSeckillId(seckillId);
+        seckillOrder.setSellerId(secKillGoods.getSellerId());
+        seckillOrder.setUserId(userId);
+        seckillOrder.setStatus("0");
+        redisTemplate.boundHashOps("secKillOrder").put(userId,seckillOrder);
+
 
     }
 
@@ -44,14 +68,14 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
     @Override
     public SeckillGoods findOneFromRedis(Long id) {
         SeckillGoods secKillGoods = (SeckillGoods)redisTemplate.boundHashOps("secKillGoods").get(id);
-        return null;
+        return secKillGoods;
     }
 
 
     //秒杀列表页面调用 查询所有秒杀商品
     @Override
     public List<SeckillGoods> findList() {
-        List<SeckillGoods> secKillGoods = redisTemplate.boundHashOps("secKillGoods").values();
+/*        List<SeckillGoods> secKillGoods = redisTemplate.boundHashOps("secKillGoods").values();
         //如果redis没数据 去数据库查询
         if (secKillGoods==null || secKillGoods.size()==0){
             SeckillGoodsQuery query = new SeckillGoodsQuery();
@@ -61,12 +85,24 @@ public class SeckillGoodsServiceImpl implements SeckillGoodsService {
             criteria.andStartTimeLessThanOrEqualTo(new Date());//开始时间小于等于当前时间
             criteria.andEndTimeGreaterThan(new Date());//结束时间大于当前时间
             secKillGoods = seckillGoodsDao.selectByExample(query);
+
+
             //查询结果放入缓存
             for (SeckillGoods secKillGood : secKillGoods) {
                 redisTemplate.boundHashOps("secKillGoods").put(secKillGood.getId(),secKillGood);
             }
-            }
+            }*/
 
-        return secKillGoods;
+
+        SeckillGoodsQuery query = new SeckillGoodsQuery();
+        SeckillGoodsQuery.Criteria criteria = query.createCriteria();
+        criteria.andStatusEqualTo("1");//审核通过
+        criteria.andStockCountGreaterThan(0);//剩余库存大于0
+        criteria.andStartTimeLessThanOrEqualTo(new Date());//开始时间小于等于当前时间
+        criteria.andEndTimeGreaterThan(new Date());//结束时间大于当前时间
+        List<SeckillGoods> seckillGoods = seckillGoodsDao.selectByExample(query);
+
+
+        return seckillGoods;
     }
 }

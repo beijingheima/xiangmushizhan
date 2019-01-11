@@ -12,7 +12,7 @@ app.service('seckillGoodsService',function($http){
 	
 	//提交订单
 	this.submitOrder=function(seckillId){
-		return $http.get('seckillOrder/submitOrder.do?seckillId='+seckillId);
+		return $http.get('seckillGoods/submitOrder.do?seckillId='+seckillId);
 	}
 	
 });

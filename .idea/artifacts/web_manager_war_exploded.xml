@@ -107,6 +107,9 @@
           <element id="archive" name="web_seckill-1.0-SNAPSHOT.jar">
             <element id="module-output" name="web_seckill" />
           </element>
+          <element id="archive" name="web_shop-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="web_shop" />
+          </element>
         </element>
       </element>
       <element id="directory" name="META-INF">
