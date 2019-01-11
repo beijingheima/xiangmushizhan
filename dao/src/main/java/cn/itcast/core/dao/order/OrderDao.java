@@ -1,6 +1,8 @@
 package cn.itcast.core.dao.order;
 
+import cn.itcast.core.pojo.entity.OrderEntity;
 import cn.itcast.core.pojo.order.Order;
+import cn.itcast.core.pojo.order.OrderItemQuery;
 import cn.itcast.core.pojo.order.OrderQuery;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +29,7 @@ public interface OrderDao {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    List<OrderEntity> findAllOrder(OrderQuery example);
+
 }
