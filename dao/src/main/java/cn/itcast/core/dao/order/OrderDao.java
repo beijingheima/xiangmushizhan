@@ -1,5 +1,6 @@
 package cn.itcast.core.dao.order;
 
+import cn.itcast.core.pojo.entity.OrderEntity;
 import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.order.OrderQuery;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface OrderDao {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    List<OrderEntity> findOrderBySellerId(String SellerId);
 }
