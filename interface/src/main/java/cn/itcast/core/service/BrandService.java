@@ -23,4 +23,5 @@ public interface BrandService {
     public void delete(Long[] ids);
 
 
+    void updateStatus(Long id, String status);
 }

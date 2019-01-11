@@ -11,9 +11,17 @@ import cn.itcast.core.pojo.specification.SpecificationQuery;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.activemq.Message;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jms.JMSException;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +35,14 @@ public class SpecServiceImpl implements SpecService {
     @Autowired
     private SpecificationOptionDao optionDao;
 
+    //用于规格上架
+    @Autowired
+    private ActiveMQTopic topicPageAndSolrDestination;
+    //用于规格下架
+    @Autowired
+    private ActiveMQQueue queueSolrDeleteDestination;
+    @Autowired
+    private JmsTemplate jmsTemplate;
 
     @Override
     public PageResult findPage(Specification spec, Integer page, Integer rows) {
@@ -115,5 +131,57 @@ public class SpecServiceImpl implements SpecService {
     @Override
     public List<Map> selectOptionList() {
         return specDao.selectOptionList();
+    }
+
+    @Override
+    public void updateStatus(final Long id, String status) {
+        /**
+         * 根据规格id改变数据库中商品的上架状态
+         */
+        //1. 修改规格状态
+        Specification spec = new Specification();
+        spec.setId(id);
+        //Specification specification = specDao.selectByPrimaryKey(id);
+        spec.setStatus(status);
+        //spec.setSpecName(specification.getSpecName());
+        specDao.updateByPrimaryKeySelective(spec);
+
+        //2. 修改规格选项状态
+//        Item item = new Item();
+//        item.setStatus(status);
+//
+//        ItemQuery query = new ItemQuery();
+//        ItemQuery.Criteria criteria = query.createCriteria();
+//        criteria.andGoodsIdEqualTo(id);
+//        itemDao.updateByExampleSelective(item, query);
+
+
+        SpecificationOption specificationOption = new SpecificationOption();
+        specificationOption.setStatus(status);
+        SpecificationOptionQuery query = new SpecificationOptionQuery();
+        SpecificationOptionQuery.Criteria criteria = query.createCriteria();
+        criteria.andSpecIdEqualTo(id);
+        optionDao.updateByExampleSelective(specificationOption,query);
+
+        /**
+         * 判断如果审核通过, 将商品id作为消息发送给消息服务器
+         */
+        if ("1".equals(status)) {
+//            //发送消息, 第一个参数是发送到的队列, 第二个参数是一个接口, 定义发送的内容
+//            jmsTemplate.send(topicPageAndSolrDestination, new MessageCreator() {
+//                @Override
+//                public Message createMessage(Session session) throws JMSException {
+//                    TextMessage textMessage = session.createTextMessage(String.valueOf(id));
+//                    return (Message) textMessage;
+//                }
+//            });
+            jmsTemplate.send(topicPageAndSolrDestination, new MessageCreator() {
+                @Override
+                public javax.jms.Message createMessage(Session session) throws JMSException {
+                    TextMessage textMessage = session.createTextMessage(String.valueOf(id));
+                    return (Message) textMessage;
+                }
+            });
+        }
     }
 }

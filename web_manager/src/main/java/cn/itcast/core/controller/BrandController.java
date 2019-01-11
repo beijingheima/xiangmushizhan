@@ -113,4 +113,28 @@ public class BrandController {
         return list;
     }
 
+    @RequestMapping("/updateStatus")
+    public  Result updateStatus(Long[] ids, String status) {
+        try {
+            if (ids != null) {
+                for (Long id : ids) {
+                    //1. 更改数据库中商品的审核状态
+                    brandService.updateStatus(id, status);
+
+                    //2. 判断商品审核状态是否为1, 审核通过
+//                    if ("1".equals(status)) {
+//                        //3. 根据商品id, 获取商品详细数据, 放入solr索引库中供前台系统搜索使用
+//                        solrManagerService.saveItemToSolr(id);
+//                        //4. 根据商品id, 获取商品详细数据, 通过数据和模板生成商品详情页面
+//                        Map<String, Object> goodsMap = cmsService.findGoodsData(id);
+//                        cmsService.createStaticPage(goodsMap, id);
+//                    }
+                }
+            }
+            return new Result(true, "状态修改成功!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "状态修改失败!");
+        }
+    }
 }
