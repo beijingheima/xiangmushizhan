@@ -10,11 +10,15 @@
       <module fileurl="file://$PROJECT_DIR$/service_buyer/service_buyer.iml" filepath="$PROJECT_DIR$/service_buyer/service_buyer.iml" />
       <module fileurl="file://$PROJECT_DIR$/service_page/service_page.iml" filepath="$PROJECT_DIR$/service_page/service_page.iml" />
       <module fileurl="file://$PROJECT_DIR$/service_search/service_search.iml" filepath="$PROJECT_DIR$/service_search/service_search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service_seckill/service_seckill.iml" filepath="$PROJECT_DIR$/service_seckill/service_seckill.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service_seckill/service_seckill.iml" filepath="$PROJECT_DIR$/service_seckill/service_seckill.iml" />
       <module fileurl="file://$PROJECT_DIR$/service_sellergoods/service_sellergoods.iml" filepath="$PROJECT_DIR$/service_sellergoods/service_sellergoods.iml" />
       <module fileurl="file://$PROJECT_DIR$/service_user/service_user.iml" filepath="$PROJECT_DIR$/service_user/service_user.iml" />
       <module fileurl="file://$PROJECT_DIR$/solr_util/solr_util.iml" filepath="$PROJECT_DIR$/solr_util/solr_util.iml" />
       <module fileurl="file://$PROJECT_DIR$/web_manager/web_manager.iml" filepath="$PROJECT_DIR$/web_manager/web_manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/web_portal/web_portal.iml" filepath="$PROJECT_DIR$/web_portal/web_portal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web_seckill/web_seckill.iml" filepath="$PROJECT_DIR$/web_seckill/web_seckill.iml" />
+      <module fileurl="file://$PROJECT_DIR$/web_seckill/web_seckill.iml" filepath="$PROJECT_DIR$/web_seckill/web_seckill.iml" />
       <module fileurl="file://$PROJECT_DIR$/web_shop/web_shop.iml" filepath="$PROJECT_DIR$/web_shop/web_shop.iml" />
       <module fileurl="file://$PROJECT_DIR$/web_user/web_user.iml" filepath="$PROJECT_DIR$/web_user/web_user.iml" />
     </modules>
