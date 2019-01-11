@@ -453,6 +453,76 @@ public class TypeTemplateQuery {
             addCriterion("custom_attribute_items not between", value1, value2, "customAttributeItems");
             return (Criteria) this;
         }
+
+        public Criteria andTemplatestatusIsNull() {
+            addCriterion("templateStatus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusIsNotNull() {
+            addCriterion("templateStatus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusEqualTo(String value) {
+            addCriterion("templateStatus =", value, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusNotEqualTo(String value) {
+            addCriterion("templateStatus <>", value, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusGreaterThan(String value) {
+            addCriterion("templateStatus >", value, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusGreaterThanOrEqualTo(String value) {
+            addCriterion("templateStatus >=", value, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusLessThan(String value) {
+            addCriterion("templateStatus <", value, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusLessThanOrEqualTo(String value) {
+            addCriterion("templateStatus <=", value, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusLike(String value) {
+            addCriterion("templateStatus like", value, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusNotLike(String value) {
+            addCriterion("templateStatus not like", value, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusIn(List<String> values) {
+            addCriterion("templateStatus in", values, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusNotIn(List<String> values) {
+            addCriterion("templateStatus not in", values, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusBetween(String value1, String value2) {
+            addCriterion("templateStatus between", value1, value2, "templatestatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplatestatusNotBetween(String value1, String value2) {
+            addCriterion("templateStatus not between", value1, value2, "templatestatus");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -61,4 +61,26 @@ public class TemplateController {
             return new Result(false, "删除失败!");
         }
     }
+
+    /**
+     * 修改商品状态
+     * @param ids       模板id
+     * @param status    模板状态: 0未审核, 1审核通过, 2驳回
+     * @return
+     */
+    @RequestMapping("/updateStatus")
+    public  Result updateStatus(Long[] ids, String status) {
+        try {
+            if (ids != null) {
+                for (Long id : ids) {
+                    //1. 更改数据库中模板的审核状态
+                    templateService.updateStatus(id, status);
+                }
+            }
+            return new Result(true, "状态修改成功!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "状态修改失败!");
+        }
+    }
 }

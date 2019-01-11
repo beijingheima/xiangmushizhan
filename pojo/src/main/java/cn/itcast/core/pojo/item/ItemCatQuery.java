@@ -363,6 +363,76 @@ public class ItemCatQuery {
             addCriterion("type_id not between", value1, value2, "typeId");
             return (Criteria) this;
         }
+
+        public Criteria andIcstatusIsNull() {
+            addCriterion("icStatus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusIsNotNull() {
+            addCriterion("icStatus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusEqualTo(String value) {
+            addCriterion("icStatus =", value, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusNotEqualTo(String value) {
+            addCriterion("icStatus <>", value, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusGreaterThan(String value) {
+            addCriterion("icStatus >", value, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusGreaterThanOrEqualTo(String value) {
+            addCriterion("icStatus >=", value, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusLessThan(String value) {
+            addCriterion("icStatus <", value, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusLessThanOrEqualTo(String value) {
+            addCriterion("icStatus <=", value, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusLike(String value) {
+            addCriterion("icStatus like", value, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusNotLike(String value) {
+            addCriterion("icStatus not like", value, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusIn(List<String> values) {
+            addCriterion("icStatus in", values, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusNotIn(List<String> values) {
+            addCriterion("icStatus not in", values, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusBetween(String value1, String value2) {
+            addCriterion("icStatus between", value1, value2, "icstatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andIcstatusNotBetween(String value1, String value2) {
+            addCriterion("icStatus not between", value1, value2, "icstatus");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -17,12 +17,23 @@ import java.util.List;
  * 如果能进入到这个实现类, 说明cas已经认证通过, 这里只做赋权操作
  */
 public class UserDetailServiceImpl implements UserDetailsService {
+
+     UserService userService;
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //定义权限集合
         List<GrantedAuthority> authList = new ArrayList<>();
         //向权限集合中加入访问权限
         authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+        //修改登录次数
+        userService.updateLoginNum(username);
+
         return new User(username, "", authList);
     }
 }

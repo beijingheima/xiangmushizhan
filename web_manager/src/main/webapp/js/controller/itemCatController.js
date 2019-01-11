@@ -1,5 +1,5 @@
  //控制层 
-app.controller('itemCatController' ,function($scope,$controller   ,itemCatService){	
+app.controller('itemCatController' ,function($scope,$controller,itemCatService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -107,15 +107,23 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		
 		$scope.findByParentId(p_entity.id);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+// 显示状态
+    $scope.status = ["未审核","审核通过","审核未通过","关闭"];
+    $scope.itemCatList = [];
+
+
+    // 审核的方法:
+    $scope.updateStatus = function(icstatus){
+        itemCatService.updateStatus($scope.selectIds,icstatus).success(function(response){
+            if(response.success){
+                $scope.reloadList();//刷新列表
+                $scope.selectIds = [];
+            }else{
+                alert(response.message);
+            }
+        });
+    }
+
     
 });	

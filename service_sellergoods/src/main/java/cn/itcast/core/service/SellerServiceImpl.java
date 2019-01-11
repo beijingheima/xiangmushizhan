@@ -1,6 +1,7 @@
 package cn.itcast.core.service;
 
 import cn.itcast.core.dao.seller.SellerDao;
+import cn.itcast.core.dao.user.UserDao;
 import cn.itcast.core.pojo.entity.PageResult;
 import cn.itcast.core.pojo.seller.Seller;
 import cn.itcast.core.pojo.seller.SellerQuery;
@@ -10,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +21,9 @@ public class SellerServiceImpl implements SellerService{
 
     @Autowired
     private SellerDao sellerDao;
+
+    @Autowired
+    UserDao userDao;
 
     @Override
     public void add(Seller seller) {
@@ -62,4 +67,25 @@ public class SellerServiceImpl implements SellerService{
         seller.setStatus(status);
         sellerDao.updateByPrimaryKeySelective(seller);
     }
+
+    //查询用户总人数
+    @Override
+    public Integer findUserNum() {
+        int i = userDao.selectUserNum();
+        return i;
+    }
+
+    //查询用户活跃度
+    @Override
+    public List<Integer> findUserLoginNum() {
+        List<Integer> list = new ArrayList<>();
+        int i = userDao.selectByLoginNum();
+        list.add(i);
+        int i1 = userDao.selectUserNum();
+        list.add(i1-i);
+        return list;
+    }
+
+
+
 }

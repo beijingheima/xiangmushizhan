@@ -11,5 +11,19 @@ app.controller("contentController",function($scope,contentService){
 	$scope.search=function(){
 		location.href="http://localhost:8080/search.html#?keywords="+$scope.keywords;
 	}
+
+    $scope.itemCatList = null;
+	//查询所有商品分类1
+    $scope.findAllItenCat = function(){
+        contentService.findAllItenCat().success(function(response){
+            $scope.itemCatList = response;
+        });
+    }
+
+    $scope.findAllItenCat2 = function(id){
+        contentService.findAllItenCat2(id).success(function(response){
+            $scope.itemCatList2 = response;
+        });
+    }
 	
 });

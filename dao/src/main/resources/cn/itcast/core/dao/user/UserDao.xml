@@ -113,6 +113,23 @@
     from tb_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <!--查询个数-->
+  <select id="selectUserNum" resultType="java.lang.Integer" >
+    SELECT COUNT(*) FROM tb_user
+  </select>
+
+  <!--查询活跃度-->
+  <select id="selectByLoginNum" resultType="java.lang.Integer" >
+    SELECT COUNT(*) FROM tb_user where loginNum > 3
+  </select>
+
+  <!--查询登录次数-->
+  <select id="selectLoginNum" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select loginNum from tb_user where username = #{username}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_user
     where id = #{id,jdbcType=BIGINT}
@@ -454,6 +471,10 @@
       <if test="lastLoginTime != null" >
         last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
+
+        <if test="loginNum != null" >
+            loginNum = #{loginNum,jdbcType=TIMESTAMP},
+        </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>

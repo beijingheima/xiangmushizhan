@@ -33,4 +33,15 @@ app.service('sellerService',function($http){
 	this.updateStatus = function(sellerId,status){
 		return $http.get('../seller/updateStatus.do?sellerId='+sellerId+"&status="+status);
 	}
+
+
+	//查询用户个数
+    this.findUserNum=function(){
+        return $http.get('../seller/findUserNum.do');
+    }
+
+    //查询用户活跃度
+    this.findUserLoginNum=function(){
+        return $http.get('../seller/findUserLoginNum.do');
+    }
 });

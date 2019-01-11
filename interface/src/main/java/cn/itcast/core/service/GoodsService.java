@@ -2,9 +2,10 @@ package cn.itcast.core.service;
 
 import cn.itcast.core.pojo.entity.GoodsEntity;
 import cn.itcast.core.pojo.entity.PageResult;
-import cn.itcast.core.pojo.entity.Result;
 import cn.itcast.core.pojo.good.Goods;
-import org.springframework.web.bind.annotation.RequestBody;
+import cn.itcast.core.pojo.seckill.SeckillGoods;
+
+import java.util.List;
 
 public interface GoodsService {
 
@@ -19,4 +20,8 @@ public interface GoodsService {
     public void  updateStatus(Long id, String  status);
 
     public void delete(Long id);
+
+    List<Goods> selectSeckillGoodsList(String seller_id);
+
+    void addSeckill(SeckillGoods secGoods, String sellerId);
 }

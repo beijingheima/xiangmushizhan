@@ -54,6 +54,7 @@ public class UserController {
             user.setUpdated(new Date());
             user.setSourceType("1");
             user.setStatus("Y");
+            user.setLoginNum(0);
 
             //2. 验证验证码是否正确, 如果不正确直接返回错误信息
             Boolean isCheck = userService.checkSmsCode(user.getPhone(), smscode);
