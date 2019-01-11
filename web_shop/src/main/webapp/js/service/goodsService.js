@@ -28,5 +28,18 @@ app.service('goodsService',function($http){
 	//搜索
 	this.search=function(page,rows,searchEntity){
 		return $http.post('../goods/search.do?page='+page+"&rows="+rows, searchEntity);
-	}    	
+	}
+    //查询秒杀商品列表
+    this.selectSeckillGoodsList = function(){
+        return $http.post('../goods/selectSeckillGoodsList.do');
+    }
+
+    //查询商品详情列表
+    this.findByGoodsId = function(goodsId){
+        return $http.get("../item/findByGoodsId.do?goodsId="+goodsId);
+    }
+
+    this.addSeckill=function(entity){
+        return  $http.post('../goods/addSeckill.do',entity );
+    }
 });

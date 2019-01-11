@@ -86,6 +86,29 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 			}		
 		);				
 	}
+
+	//保存秒杀商品
+	$scope.saveSeckill=function(){
+		// 再添加之前，获得富文本编辑器中的内容。
+		$scope.entity.seckillGoods.introduction=editor.html();
+		var serviceObject;//服务层对象
+		if($scope.entity.seckillGoods.id!=null){//如果有ID
+			serviceObject=goodsService.update( $scope.entity ); //修改
+		}else{
+			serviceObject=goodsService.addSeckill( $scope.entity.seckillGoods );//增加
+		}
+		serviceObject.success(
+			function(response){
+				if(response.success){
+					//重新查询
+		        	alert(response.message);
+		        	location.href="goods.html";//--------------------------------------------------
+				}else{
+					alert(response.message);
+				}
+			}
+		);
+	}
 	
 	 
 	//批量删除 
@@ -120,7 +143,7 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 		uploadService.uploadFile().success(function(response){
 			if(response.success){
 				// 获得url
-				$scope.image_entity.url =  response.message;
+				$scope.entity.seckillGoods.smallPic =  response.message;
 			}else{
 				alert(response.message);
 			}
@@ -133,6 +156,11 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 	$scope.add_image_entity = function(){
 		$scope.entity.goodsDesc.itemImages.push($scope.image_entity);
 	}
+
+    $scope.entity={goods:{},seckillGoods:{smallPic:[]}};
+    $scope.add_seckillGoods_entity = function(){
+        $scope.entity.seckillGoods.smallPic.push($scope.image_entity);
+    }
 	
 	$scope.remove_iamge_entity = function(index){
 		$scope.entity.goodsDesc.itemImages.splice(index,1);
@@ -258,4 +286,18 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 			}
 		});
 	}
+
+    //查询秒杀商品列表
+    $scope.selectSeckillGoodsList = function(){
+        goodsService.selectSeckillGoodsList().success(function(response){
+            $scope.seckillList = response;
+        });
+    }
+
+    //查询商品详情列表
+    $scope.$watch("entity.seckillGoods.goodsId",function(newValue,oldValue){
+        goodsService.findByGoodsId(newValue).success(function(response){
+            $scope.itemList = response;
+        });
+    });
 });	

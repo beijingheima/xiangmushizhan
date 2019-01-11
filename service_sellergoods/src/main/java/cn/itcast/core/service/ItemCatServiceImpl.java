@@ -22,6 +22,8 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +42,7 @@ public class ItemCatServiceImpl implements ItemCatService {
 
     @Autowired
     private ActiveMQTopic topicPageAndSolrDestination;
+
     @Override
     public List<ItemCat> findByParentId(Long parentId) {
         //1. 查询所有分类数据
@@ -68,8 +71,10 @@ public class ItemCatServiceImpl implements ItemCatService {
         return catDao.selectByExample(null);
     }
 
+
     /**
      * 更改状态
+     *
      * @param id
      * @param icstatus
      */
@@ -79,11 +84,10 @@ public class ItemCatServiceImpl implements ItemCatService {
          * 根据分类id改变数据库中分类的状态
          */
         //1. 修改分类状态
-        ItemCat itemCat=new ItemCat();
+        ItemCat itemCat = new ItemCat();
         itemCat.setId(id);
         itemCat.setIcstatus(icstatus);
         catDao.updateByPrimaryKeySelective(itemCat);
-
 
         /**
          * 判断如果审核通过, 将商品id作为消息发送给消息服务器
@@ -112,7 +116,12 @@ public class ItemCatServiceImpl implements ItemCatService {
                 criteria.andIcstatusEqualTo(itemCat.getIcstatus());
             }
         }
-        Page<ItemCat> itemCatList = (Page<ItemCat>)catDao.selectByExample(query);
+        Page<ItemCat> itemCatList = (Page<ItemCat>) catDao.selectByExample(query);
         return new PageResult(itemCatList.getTotal(), itemCatList.getResult());
+
+        //查询所有的商品分类
+
     }
+
+
 }

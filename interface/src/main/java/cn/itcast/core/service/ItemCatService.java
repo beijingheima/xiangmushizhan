@@ -5,6 +5,7 @@ import cn.itcast.core.pojo.item.ItemCat;
 import cn.itcast.core.pojo.template.TypeTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ItemCatService {
 
@@ -14,7 +15,9 @@ public interface ItemCatService {
 
     public List<ItemCat> findAll();
 
+
     void updateStatus(Long id, String icstatus);
 
     PageResult findPage(ItemCat itemCat, Integer page, Integer rows);
+
 }

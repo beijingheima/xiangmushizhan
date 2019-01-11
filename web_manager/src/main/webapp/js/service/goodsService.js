@@ -33,4 +33,13 @@ app.service('goodsService',function($http){
 	this.updateStatus = function(ids,status){
 		return $http.get('../goods/updateStatus.do?ids='+ids+"&status="+status);
 	}
+
+    //搜索
+    this.searchSeckill=function(page,rows,searchSeckillEntity){
+        return $http.post('../seckill/searchSeckill.do?page='+page+"&rows="+rows, searchSeckillEntity);
+    }
+
+    this.updateSeckillStatus = function(ids,status){
+        return $http.get('../seckill/updateStatus.do?ids='+ids+"&status="+status);
+    }
 });
