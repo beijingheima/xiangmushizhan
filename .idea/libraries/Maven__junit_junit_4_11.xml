@@ -1,6 +1,7 @@
 <component name="libraryTable">
   <library name="Maven: junit:junit:4.11">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://G:/soft/apache-maven-3.3.9/repository_pinyougou3/repository_pinyougou3/junit/junit/4.11/junit-4.11.jar!/" />
     </CLASSES>
     <JAVADOC>
@@ -8,6 +9,15 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://G:/soft/apache-maven-3.3.9/repository_pinyougou3/repository_pinyougou3/junit/junit/4.11/junit-4.11-sources.jar!/" />
+=======
+      <root url="jar://D:/repository_pinyougou/junit/junit/4.11/junit-4.11.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository_pinyougou/junit/junit/4.11/junit-4.11-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository_pinyougou/junit/junit/4.11/junit-4.11-sources.jar!/" />
+>>>>>>> 8c399f4c4f55e00667e36b9e2b7e3d0e98d01740
     </SOURCES>
   </library>
 </component>

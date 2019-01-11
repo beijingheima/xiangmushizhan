@@ -1,6 +1,7 @@
 <component name="libraryTable">
   <library name="Maven: org.springframework:spring-web:4.2.4.RELEASE">
     <CLASSES>
+<<<<<<< HEAD
       <root url="jar://G:/soft/apache-maven-3.3.9/repository_pinyougou3/repository_pinyougou3/org/springframework/spring-web/4.2.4.RELEASE/spring-web-4.2.4.RELEASE.jar!/" />
     </CLASSES>
     <JAVADOC>
@@ -8,6 +9,15 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://G:/soft/apache-maven-3.3.9/repository_pinyougou3/repository_pinyougou3/org/springframework/spring-web/4.2.4.RELEASE/spring-web-4.2.4.RELEASE-sources.jar!/" />
+=======
+      <root url="jar://D:/repository_pinyougou/org/springframework/spring-web/4.2.4.RELEASE/spring-web-4.2.4.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://D:/repository_pinyougou/org/springframework/spring-web/4.2.4.RELEASE/spring-web-4.2.4.RELEASE-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://D:/repository_pinyougou/org/springframework/spring-web/4.2.4.RELEASE/spring-web-4.2.4.RELEASE-sources.jar!/" />
+>>>>>>> 8c399f4c4f55e00667e36b9e2b7e3d0e98d01740
     </SOURCES>
   </library>
 </component>
