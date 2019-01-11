@@ -4,12 +4,17 @@ import cn.itcast.core.dao.log.PayLogDao;
 import cn.itcast.core.dao.order.OrderDao;
 import cn.itcast.core.dao.order.OrderItemDao;
 import cn.itcast.core.pojo.entity.BuyerCart;
+import cn.itcast.core.pojo.entity.OrderEntity;
+import cn.itcast.core.pojo.entity.PageResult;
 import cn.itcast.core.pojo.log.PayLog;
 import cn.itcast.core.pojo.order.Order;
 import cn.itcast.core.pojo.order.OrderItem;
+import cn.itcast.core.pojo.order.OrderItemQuery;
 import cn.itcast.core.util.Constants;
 import cn.itcast.core.util.IdWorker;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.opensaml.xml.signature.P;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -148,4 +153,59 @@ public class OrderServiceImpl implements OrderService {
             redisTemplate.boundHashOps("payLog").delete(userName);
         }
     }
+
+
+
+    @Override
+    public PageResult findPage(String sellerId, Integer page, Integer rows) {
+        //使用分页助手传入当前页和每页差询多少条数据
+        PageHelper.startPage(page,rows);
+        //使用分页助手的page对象接收查询到的数据, page对象继承了ArrayList所以可以接收查询到的结果集数据.
+        Page<OrderEntity> orderEntities = (Page<OrderEntity>)orderDao.findOrderBySellerId(sellerId);
+        //将订单id转换成String类型,防止精度丢失
+        for (OrderEntity orderEntity : orderEntities) {
+            orderEntity.setOrderIdStr(orderEntity.getOrderId().toString());
+        }
+        return new PageResult(orderEntities.getTotal(),orderEntities.getResult());
+
+    }
+
+    /**
+     *  根据订单id 差询order表中的物流信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Order findOne(String id) {
+        long l = Long.parseLong(id);
+        Order order = orderDao.selectByPrimaryKey(l);
+        order.setOrderIdStr(order.getOrderId().toString());
+        if (order != null) {
+            if (order.getShippingName() == null && !"".equals(order.getShippingName())) {
+                order.setShippingName("请填写物流名称");
+            }
+            if (order.getShippingCode() == null && !"".equals(order.getShippingCode())) {
+                order.setShippingCode("请填写物流单号");
+            }
+        }
+        return order;
+    }
+
+    /**
+     * 修改订单表中的物流信息
+     * @param order
+     */
+    @Override
+    public void updateShipping(Order order) {
+        //将订单实体对象中的String类型订单id转换成Long类型
+        order.setOrderId(Long.parseLong(order.getOrderIdStr()));
+        //设置发货时间
+        order.setConsignTime(new Date());
+
+        orderDao.updateByPrimaryKeySelective(order);
+
+
+    }
+
+
 }

@@ -4,6 +4,7 @@ import cn.itcast.core.pojo.entity.GoodsEntity;
 import cn.itcast.core.pojo.entity.PageResult;
 import cn.itcast.core.pojo.entity.Result;
 import cn.itcast.core.pojo.good.Goods;
+import cn.itcast.core.pojo.seckill.SeckillGoods;
 import cn.itcast.core.service.GoodsService;
 import cn.itcast.core.service.SolrManagerService;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -11,6 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 商品管理
@@ -98,6 +101,24 @@ public class GoodsController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, "删除失败!");
+        }
+    }
+
+    @RequestMapping("/selectSeckillGoodsList")
+    public List<Goods> selectSeckillGoodsList() {
+        String seller_id = SecurityContextHolder.getContext().getAuthentication().getName();
+        return goodsService.selectSeckillGoodsList(seller_id);
+    }
+
+    @RequestMapping("/addSeckill")
+    public Result addSeckill(@RequestBody SeckillGoods secGoods) {
+        try {
+            String sellerId = SecurityContextHolder.getContext().getAuthentication().getName();
+            goodsService.addSeckill(secGoods,sellerId);
+            return new Result(true, "添加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "添加失败");
         }
     }
 }

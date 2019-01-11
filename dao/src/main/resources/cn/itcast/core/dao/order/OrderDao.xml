@@ -530,4 +530,26 @@
       seller_id = #{sellerId,jdbcType=VARCHAR}
     where order_id = #{orderId,jdbcType=BIGINT}
   </update>
+
+  <resultMap id="order" type="cn.itcast.core.pojo.entity.OrderEntity">
+    <result column="goods_id" property="goodsId"/>
+
+    <result column="goods_name" property="goodsName"/>
+    <result column="price" property="price"/>
+    <result column="num" property="num"/>
+    <result column="payment" property="payment"/>
+    <result column="source_type" property="source"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="status" property="status"/>
+  </resultMap>
+  <select id="findAllOrder" resultMap="order" parameterType="java.lang.String">
+    SELECT i.goods_id,g.goods_name,g.price,i.num,o.payment,o.source_type source,o.create_time,o.`status`
+    FROM tb_order_item AS i,tb_order o,tb_goods g
+    where o.order_id = i.order_id and i.goods_id = g.id
+
+  <select id="findOrderBySellerId" resultMap="order" parameterType="java.lang.String">
+    SELECT o.order_id, g.goods_name,g.price,i.num,o.payment,o.source_type,o.create_time,o.payment_type
+FROM (select * from tb_order_item where seller_id = 'tom')AS i,tb_order o,tb_goods g
+where o.order_id = i.order_id and i.goods_id = g.id
+  </select>
 </mapper>

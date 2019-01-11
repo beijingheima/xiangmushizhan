@@ -87,4 +87,23 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 			}
 		});
 	}
+
+
+	//	查询用户个数
+    $scope.findUserNum=function(){
+        sellerService.findUserNum().success(
+            function(response){
+                $scope.Snum=response;
+            }
+        );
+    }
+
+    //查询用户活跃度
+    $scope.findUserLoginNum=function(){
+        sellerService.findUserLoginNum().success(
+            function(response){
+                $scope.loginlist=response;
+            }
+        );
+    }
 });	

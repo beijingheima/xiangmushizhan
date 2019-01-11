@@ -2,6 +2,7 @@ package cn.itcast.core.service;
 
 import cn.itcast.core.dao.user.UserDao;
 import cn.itcast.core.pojo.user.User;
+import cn.itcast.core.pojo.user.UserQuery;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import org.apache.activemq.command.ActiveMQQueue;
@@ -16,6 +17,7 @@ import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.Session;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -96,6 +98,21 @@ public class UserServiceImpl implements UserService {
         userDao.insertSelective(user);
     }
 
+    @Override
+    public void updateLoginNum(String username) {
+        int i = userDao.selectLoginNum(username);
+
+        UserQuery query = new UserQuery();
+        UserQuery.Criteria criteria = query.createCriteria();
+        criteria.andUsernameEqualTo(username);
+        List<User> users = userDao.selectByExample(query);
+        User user = users.get(0);
+
+        user.setLoginNum(i+1);
+        userDao.updateByPrimaryKeySelective(user);
+
+    }
+
     public static void main(String[] args) {
         StringBuffer sb = new StringBuffer();
         for(int i = 1; i< 7; i++) {
@@ -103,5 +120,5 @@ public class UserServiceImpl implements UserService {
         }
 
         System.out.println("======" + sb.toString());
-    }
+}
 }

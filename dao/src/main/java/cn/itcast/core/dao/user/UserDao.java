@@ -27,4 +27,14 @@ public interface UserDao {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+
+    //查询用户个数
+    int selectUserNum();
+
+    //查询活跃度
+    int selectByLoginNum();
+
+    //查询登录次数
+    int selectLoginNum(String username);
 }

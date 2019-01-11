@@ -10,6 +10,8 @@ public class Order implements Serializable {
      */
     private Long orderId;
 
+    private String orderIdStr;//订单idString类型,防止前端丢失精度
+
     /**
      * 实付金额。精确到2位小数;单位:元。如:200.07，表示:200元7分
      */
@@ -131,6 +133,14 @@ public class Order implements Serializable {
     private String sellerId;
 
     private static final long serialVersionUID = 1L;
+
+    public String getOrderIdStr() {
+        return orderIdStr;
+    }
+
+    public void setOrderIdStr(String orderIdStr) {
+        this.orderIdStr = orderIdStr;
+    }
 
     public Long getOrderId() {
         return orderId;

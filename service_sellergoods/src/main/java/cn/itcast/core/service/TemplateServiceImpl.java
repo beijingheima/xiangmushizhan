@@ -3,6 +3,9 @@ package cn.itcast.core.service;
 import cn.itcast.core.dao.specification.SpecificationOptionDao;
 import cn.itcast.core.dao.template.TypeTemplateDao;
 import cn.itcast.core.pojo.entity.PageResult;
+import cn.itcast.core.pojo.good.Goods;
+import cn.itcast.core.pojo.item.Item;
+import cn.itcast.core.pojo.item.ItemQuery;
 import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.pojo.specification.SpecificationOption;
 import cn.itcast.core.pojo.specification.SpecificationOptionQuery;
@@ -13,10 +16,17 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +43,11 @@ public class TemplateServiceImpl implements TemplateService {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+    @Autowired
+    private ActiveMQTopic topicPageAndSolrDestination;
     @Override
     public PageResult findPage(TypeTemplate template, Integer page, Integer rows) {
         //1. 查询所有模板数据
@@ -116,5 +131,36 @@ public class TemplateServiceImpl implements TemplateService {
         }
 
         return maps;
+    }
+
+    /**
+     * 更改状态
+     * @param id
+     * @param templateStatus
+     */
+    @Override
+    public void updateStatus(final Long id, String templateStatus) {
+        /**
+         * 根据模板id改变数据库中模板的上架状态
+         */
+        //1. 修改模板状态
+       TypeTemplate template = new TypeTemplate();
+       template.setId(id);
+       template.setTemplatestatus(templateStatus);
+       templateDao.updateByPrimaryKeySelective(template);
+
+        /**
+         * 判断如果审核通过, 将商品id作为消息发送给消息服务器
+         */
+        if ("1".equals(templateStatus)) {
+            //发送消息, 第一个参数是发送到的队列, 第二个参数是一个接口, 定义发送的内容
+            jmsTemplate.send(topicPageAndSolrDestination, new MessageCreator() {
+                @Override
+                public Message createMessage(Session session) throws JMSException {
+                    TextMessage textMessage = session.createTextMessage(String.valueOf(id));
+                    return textMessage;
+                }
+            });
+        }
     }
 }

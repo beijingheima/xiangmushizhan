@@ -15,7 +15,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/brand")
 public class BrandController {
-    //12312312132
     @Reference
     private BrandService brandService;
 

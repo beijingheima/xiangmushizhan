@@ -23,6 +23,8 @@ public class ItemCat implements Serializable {
      */
     private Long typeId;
 
+    private String icstatus;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -57,6 +59,14 @@ public class ItemCat implements Serializable {
         this.typeId = typeId;
     }
 
+    public String getIcstatus() {
+        return icstatus;
+    }
+
+    public void setIcstatus(String icstatus) {
+        this.icstatus = icstatus == null ? null : icstatus.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -67,6 +77,7 @@ public class ItemCat implements Serializable {
         sb.append(", parentId=").append(parentId);
         sb.append(", name=").append(name);
         sb.append(", typeId=").append(typeId);
+        sb.append(", icstatus=").append(icstatus);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -87,7 +98,8 @@ public class ItemCat implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getParentId() == null ? other.getParentId() == null : this.getParentId().equals(other.getParentId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getTypeId() == null ? other.getTypeId() == null : this.getTypeId().equals(other.getTypeId()));
+            && (this.getTypeId() == null ? other.getTypeId() == null : this.getTypeId().equals(other.getTypeId()))
+            && (this.getIcstatus() == null ? other.getIcstatus() == null : this.getIcstatus().equals(other.getIcstatus()));
     }
 
     @Override
@@ -98,6 +110,7 @@ public class ItemCat implements Serializable {
         result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getTypeId() == null) ? 0 : getTypeId().hashCode());
+        result = prime * result + ((getIcstatus() == null) ? 0 : getIcstatus().hashCode());
         return result;
     }
 }
