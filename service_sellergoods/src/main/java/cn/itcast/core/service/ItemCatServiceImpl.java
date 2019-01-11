@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -47,5 +50,25 @@ public class ItemCatServiceImpl implements ItemCatService {
     @Override
     public List<ItemCat> findAll() {
         return catDao.selectByExample(null);
+    }
+
+
+    //查询所有的商品分类
+    @Override
+    public List<Map> findAllMap() {
+        List<Map> list = new ArrayList<>();
+
+        ItemCatQuery query = new ItemCatQuery();
+        ItemCatQuery.Criteria criteria = query.createCriteria();
+        criteria.andParentIdEqualTo(0l);
+
+        List<ItemCat> itemCats = catDao.selectByExample(query);
+        for (ItemCat itemCat : itemCats) {
+            Map map = new HashMap();
+            map.put(itemCat,null);
+            list.add(map);
+        }
+
+        return list;
     }
 }

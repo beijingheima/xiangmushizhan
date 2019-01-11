@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/seller")
 public class SellerController {
@@ -43,5 +45,20 @@ public class SellerController {
             e.printStackTrace();
             return new Result(false, "审核失败!");
         }
+    }
+
+    //查询用户人数
+    @RequestMapping("/findUserNum")
+    public Integer findUserNum (){
+        Integer userNum = sellerService.findUserNum();
+        System.out.println(userNum);
+        return userNum;
+    }
+
+    //查询用户活跃度
+    @RequestMapping("/findUserLoginNum")
+    public List<Integer> findUserLoginNum(){
+        List<Integer> userLoginNum = sellerService.findUserLoginNum();
+        return userLoginNum;
     }
 }
