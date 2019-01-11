@@ -32,4 +32,5 @@ public interface OrderDao {
 
     List<OrderEntity> findAllOrder(OrderQuery example);
 
+    List<OrderEntity> findOrderBySellerId(String SellerId);
 }

@@ -1,5 +1,10 @@
 package cn.itcast.core.pojo.entity;
 
+<<<<<<< HEAD
+=======
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+>>>>>>> 23838065779416bd1fb3de6991d23dd0f38af438
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,7 +20,17 @@ import java.util.Date;
  */
 public class OrderEntity implements Serializable {
 
+<<<<<<< HEAD
     private Long goodsId;
+=======
+
+
+
+
+    private Long orderId;//订单id
+
+    private String orderIdStr;//订单idString类型,防止js丢失精度
+>>>>>>> 23838065779416bd1fb3de6991d23dd0f38af438
 
     private String goodsName;//商品名称
 
@@ -31,12 +46,21 @@ public class OrderEntity implements Serializable {
 
     private String status;//状态
 
+<<<<<<< HEAD
     public Long getGoodsId() {
         return goodsId;
     }
 
     public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
+=======
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+>>>>>>> 23838065779416bd1fb3de6991d23dd0f38af438
     }
 
     public String getGoodsName() {
@@ -92,6 +116,20 @@ public class OrderEntity implements Serializable {
     }
 
     public void setStatus(String status) {
+<<<<<<< HEAD
         this.status = status;
     }
 }
+=======
+        status = status;
+    }
+
+    public String getOrderIdStr() {
+        return orderIdStr;
+    }
+
+    public void setOrderIdStr(String orderIdStr) {
+        this.orderIdStr = orderIdStr;
+    }
+}
+>>>>>>> 23838065779416bd1fb3de6991d23dd0f38af438
