@@ -185,12 +185,12 @@ public class GoodsServiceImpl implements GoodsService {
             });
         }
     }
-
+    /**
+     * 1. 根据商品id到数据库中逻辑删除商品数据
+     */
     @Override
     public void delete(final Long id) {
-        /**
-         * 1. 根据商品id到数据库中逻辑删除商品数据
-         */
+
         //根据商品id对商品表做逻辑删除
         Goods goods = new Goods();
         goods.setId(id);

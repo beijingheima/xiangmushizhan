@@ -19,4 +19,6 @@ public interface TemplateService {
     public void delete(Long[] ids);
 
     public List<Map> findBySpecList(Long id);
+
+    void updateStatus(Long id, String status);
 }

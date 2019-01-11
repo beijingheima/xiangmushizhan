@@ -105,11 +105,7 @@
     insert into tb_specification (id, spec_name)
     values (#{id,jdbcType=BIGINT}, #{specName,jdbcType=VARCHAR})
   </insert>
-
-  <!-- useGeneratedKeys="true" 设置使用主键自增 keyProperty="id" 自增后的主键返回到传入参数对象Specification中的
-  id属性中保存供我们使用-->
-  <insert id="insertSelective" parameterType="cn.itcast.core.pojo.specification.Specification"
-          useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="cn.itcast.core.pojo.specification.Specification" >
     insert into tb_specification
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -170,9 +166,4 @@
     set spec_name = #{specName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-
-
-  <select id="selectOptionList" resultType="java.util.Map">
-    select id, spec_name as text from tb_specification
-  </select>
 </mapper>
