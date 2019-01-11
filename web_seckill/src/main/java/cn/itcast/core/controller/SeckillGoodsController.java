@@ -21,7 +21,7 @@ public class SeckillGoodsController {
     @RequestMapping("/findList")
     public List<SeckillGoods> findList(){
         System.out.println("进入列表查询");
-        System.out.println(seckillGoodsService.findList());
+        //System.out.println(seckillGoodsService.findList());
         return seckillGoodsService.findList();
     }
     @RequestMapping("/findOneFromRedis")
