@@ -5,6 +5,7 @@ import cn.itcast.core.dao.good.GoodsDao;
 import cn.itcast.core.dao.good.GoodsDescDao;
 import cn.itcast.core.dao.item.ItemCatDao;
 import cn.itcast.core.dao.item.ItemDao;
+import cn.itcast.core.dao.seckill.SeckillGoodsDao;
 import cn.itcast.core.dao.seller.SellerDao;
 import cn.itcast.core.pojo.entity.GoodsEntity;
 import cn.itcast.core.pojo.entity.PageResult;
@@ -15,6 +16,7 @@ import cn.itcast.core.pojo.good.GoodsQuery;
 import cn.itcast.core.pojo.item.Item;
 import cn.itcast.core.pojo.item.ItemCat;
 import cn.itcast.core.pojo.item.ItemQuery;
+import cn.itcast.core.pojo.seckill.SeckillGoods;
 import cn.itcast.core.pojo.seller.Seller;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
@@ -25,6 +27,7 @@ import org.apache.activemq.command.ActiveMQTopic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.jms.JMSException;
@@ -40,6 +43,8 @@ import java.util.Map;
 @Service
 @Transactional
 public class GoodsServiceImpl implements GoodsService {
+    @Autowired
+    private SeckillGoodsDao seckillGoodsDao;
 
     @Autowired
     private GoodsDao goodsDao;
@@ -207,6 +212,33 @@ public class GoodsServiceImpl implements GoodsService {
                 return textMessage;
             }
         });
+    }
+
+    @Override
+    public List<Goods> selectSeckillGoodsList(String seller_id) {
+        if (seller_id != null && !"".equals(seller_id)) {
+            GoodsQuery query = new GoodsQuery();
+            GoodsQuery.Criteria criteria = query.createCriteria();
+            criteria.andSellerIdEqualTo(seller_id);
+            List<Goods> seckillList = goodsDao.selectByExample(query);
+            return seckillList;
+        }
+        return null;
+    }
+
+    /**
+     * 添加秒杀商品
+     * @param secGoods
+     * @param sellerId
+     */
+    @Override
+    public void addSeckill(SeckillGoods secGoods, String sellerId) {
+        System.out.println(secGoods);
+        secGoods.setSellerId(sellerId);
+        secGoods.setCreateTime(new Date());
+        secGoods.setStatus("0");
+        secGoods.setStockCount(secGoods.getNum());
+        seckillGoodsDao.insertSelective(secGoods);
     }
 
     /**
